@@ -65,7 +65,7 @@ class MainForm extends MenuForm {
                                 return;
                             }
 
-                            if (strlen($name) >= 3 && strlen($name) <= 32) {
+                            if (!(strlen($name) >= 3 && strlen($name) <= 32)) {
                                 $player->sendMessage(Kahoot::PREFIX . "§cThe name is too short or too long! §8(§c3-32 characters§8)");
                                 return;
                             }
