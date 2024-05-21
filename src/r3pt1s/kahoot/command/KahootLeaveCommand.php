@@ -6,10 +6,12 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
+use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
 use r3pt1s\kahoot\game\KahootGameManager;
 use r3pt1s\kahoot\Kahoot;
 
-class KahootLeaveCommand extends Command {
+class KahootLeaveCommand extends Command implements PluginOwned {
 
     public function __construct() {
         parent::__construct("kahootleave", "Leave a Kahoot game", "/kahootleave", ["kleave"]);
@@ -25,5 +27,9 @@ class KahootLeaveCommand extends Command {
             }
         }
         return true;
+    }
+
+    public function getOwningPlugin(): Plugin {
+        return Kahoot::getInstance();
     }
 }

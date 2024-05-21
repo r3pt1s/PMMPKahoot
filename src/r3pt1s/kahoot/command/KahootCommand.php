@@ -6,11 +6,13 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
+use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginOwned;
 use r3pt1s\kahoot\form\MainForm;
 use r3pt1s\kahoot\game\KahootGameManager;
 use r3pt1s\kahoot\Kahoot;
 
-class KahootCommand extends Command {
+class KahootCommand extends Command implements PluginOwned {
 
     public function __construct() {
         parent::__construct("kahoot", "Kahoot Command", "/kahoot");
@@ -54,5 +56,9 @@ class KahootCommand extends Command {
             $sender->sendForm(new MainForm());
         }
         return true;
+    }
+
+    public function getOwningPlugin(): Plugin {
+        return Kahoot::getInstance();
     }
 }
