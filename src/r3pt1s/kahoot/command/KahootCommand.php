@@ -39,8 +39,6 @@ class KahootCommand extends Command {
                         }
 
                         if (strtolower($args[0]) == "start") {
-                            $game->startGame();
-                            return true;
                             if (count($game->getParticipants()) >= 2) {
                                 $game->startGame();
                             } else $sender->sendMessage(Kahoot::PREFIX . "§cYou can't start the game yet!");
