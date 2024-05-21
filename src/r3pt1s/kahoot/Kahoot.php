@@ -32,7 +32,7 @@ class Kahoot extends PluginBase {
 
         TemplateManager::getInstance()->loadTemplates();
 
-        $this->getServer()->getCommandMap()->registerAll("pmmpkahoot", [new KahootCommand(), new KahootLeaveCommand()]);
+        $this->getServer()->getCommandMap()->registerAll("PMMPKahoot", [new KahootCommand(), new KahootLeaveCommand()]);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
