@@ -1,6 +1,6 @@
 name: PMMPKahoot
 version: 1.0.0
 api: 5.0.0
-main: r3pt1s\kahoot\kahoot
+main: r3pt1s\kahoot\Kahoot
 author: r3pt1s
 description: Kahoot-based minigame for PocketMine-MP
