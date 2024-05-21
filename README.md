@@ -1,4 +1,4 @@
-# PMMPKahoot [![](https://poggit.pmmp.io/shield.dl/GroupSystem)](https://poggit.pmmp.io/p/GroupSystem) [![](https://poggit.pmmp.io/shield.dl.total/GroupSystem)](https://poggit.pmmp.io/p/GroupSystem)
+# PMMPKahoot [![](https://poggit.pmmp.io/shield.dl/PMMPKahoot)](https://poggit.pmmp.io/p/PMMPKahoot) [![](https://poggit.pmmp.io/shield.dl.total/PMMPKahoot)](https://poggit.pmmp.io/p/PMMPKahoot)
 
 A Kahoot-based game for your PocketMineMP server.
 
