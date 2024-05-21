@@ -1,8 +1,11 @@
-# PMMPKahoot
+# PMMPKahoot [![](https://poggit.pmmp.io/shield.dl/GroupSystem)](https://poggit.pmmp.io/p/GroupSystem) [![](https://poggit.pmmp.io/shield.dl.total/GroupSystem)](https://poggit.pmmp.io/p/GroupSystem)
+
 A Kahoot-based game for your PocketMineMP server.
 
 ## Features
-- **Custom / User made** game templates
+- **Create your own** game templates to play with
+- **Public and private** lobbies to play with the whole server
+- **Play with others**, even as the host of the game
 
 ## Commands
 | Usage        | Description             | Permission    |
