@@ -1,13 +1,16 @@
-# Features
+# PMMPKahoot
+A Kahoot-based game for your PocketMineMP server.
+
+## Features
 - **Custom / User made** game templates
 
-# Commands
+## Commands
 | Usage        | Description             | Permission    |
 |--------------|-------------------------|---------------|
 | /kahoot      | The main Kahoot command | No Permission |
 | /kahootleave | Leave your current game | No Permission |
 
-# Configuration
+## Configuration
 ```yml
 public-lobbies:
   # permissionToCreate: none
