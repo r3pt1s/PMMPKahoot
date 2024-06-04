@@ -17,9 +17,9 @@ A Kahoot-based game for your PocketMineMP server.
 ```yml
 public-lobbies:
   # permissionToCreate: none
-  permissionToCreate: kahoot.game.public_lobby # Type "none" if your players don't need a permission to create public Kahoot games.
+  permissionToCreate: pmmpkahoot.game.public_lobby # Type "none" if your players don't need a permission to create public Kahoot games.
 
 create-templates:
   # permissionToCreate: none
-  permissionToCreate: kahoot.template.create # Type "none" if your players don't need a permission to create public Kahoot games.
+  permissionToCreate: pmmpkahoot.template.create # Type "none" if your players don't need a permission to create public Kahoot games.
 ```
