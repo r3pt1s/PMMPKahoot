@@ -15,10 +15,10 @@ A Kahoot-based game for your PocketMineMP server.
 
 
 ## Permissions
-| Description           | Permission                     |
-|-----------------------|--------------------------------|
-| Create public lobbies | pmmpkahoot.public_lobby.create |
-| Create templates      | pmmpkahoot.template.create     |
+| Description           | Permission                    |
+|-----------------------|-------------------------------|
+| Create public lobbies | pmmpkahoot.publiclobby.create |
+| Create templates      | pmmpkahoot.template.create    |
 
 ## Configuration
 ```yml

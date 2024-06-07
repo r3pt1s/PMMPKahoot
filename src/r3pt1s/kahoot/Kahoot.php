@@ -22,7 +22,7 @@ class Kahoot extends PluginBase {
         if (!file_exists($this->getDataFolder() . "creations/")) mkdir($this->getDataFolder() . "creations/");
         $this->saveDefaultConfig();
 
-        DefaultPermissions::registerPermission(new Permission("pmmpkahoot.public_lobby.create"), [PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR)]);
+        DefaultPermissions::registerPermission(new Permission("pmmpkahoot.publiclobby.create"), [PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR)]);
         DefaultPermissions::registerPermission(new Permission("pmmpkahoot.template.create"), [PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR)]);
 
         TemplateManager::getInstance()->loadTemplates();
