@@ -1,7 +1,5 @@
 public-lobbies:
-  # permissionToCreate: none
-  permissionToCreate: pmmpkahoot.game.public_lobby # Type "none" if your players don't need a permission to create public Kahoot games.
+  needPermToCreate: true # Type "false" if your players don't need a permission to create public Kahoot games.
 
 create-templates:
-  # permissionToCreate: none
-  permissionToCreate: pmmpkahoot.template.create # Type "none" if your players don't need a permission to create public Kahoot games.
+  needPermToCreate: true # Type "false" if your players don't need a permission to create templates.

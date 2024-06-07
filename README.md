@@ -13,13 +13,18 @@ A Kahoot-based game for your PocketMineMP server.
 | /kahoot      | The main Kahoot command | No Permission |
 | /kahootleave | Leave your current game | No Permission |
 
+
+## Permissions
+| Description           | Permission                     |
+|-----------------------|--------------------------------|
+| Create public lobbies | pmmpkahoot.public_lobby.create |
+| Create templates      | pmmpkahoot.template.create     |
+
 ## Configuration
 ```yml
 public-lobbies:
-  # permissionToCreate: none
-  permissionToCreate: pmmpkahoot.game.public_lobby # Type "none" if your players don't need a permission to create public Kahoot games.
+  needPermToCreate: true # Type "false" if your players don't need a permission to create public Kahoot games.
 
 create-templates:
-  # permissionToCreate: none
-  permissionToCreate: pmmpkahoot.template.create # Type "none" if your players don't need a permission to create public Kahoot games.
+  needPermToCreate: true # Type "false" if your players don't need a permission to create templates.
 ```
