@@ -4,3 +4,11 @@ api: 5.0.0
 main: r3pt1s\kahoot\Kahoot
 author: r3pt1s
 description: Kahoot-based minigame for PocketMine-MP
+
+permissions:
+  pmmpkahoot.publiclobby.create:
+    default: op
+    description: Permission to create public games
+  pmmpkahoot.template.create:
+    default: op
+    description: Permission to create templates

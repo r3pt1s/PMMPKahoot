@@ -2,9 +2,6 @@
 
 namespace r3pt1s\kahoot;
 
-use pocketmine\permission\DefaultPermissions;
-use pocketmine\permission\Permission;
-use pocketmine\permission\PermissionManager;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\SingletonTrait;
 use r3pt1s\kahoot\command\KahootCommand;
@@ -21,9 +18,6 @@ class Kahoot extends PluginBase {
         self::setInstance($this);
         if (!file_exists($this->getDataFolder() . "creations/")) mkdir($this->getDataFolder() . "creations/");
         $this->saveDefaultConfig();
-
-        DefaultPermissions::registerPermission(new Permission("pmmpkahoot.publiclobby.create"), [PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR)]);
-        DefaultPermissions::registerPermission(new Permission("pmmpkahoot.template.create"), [PermissionManager::getInstance()->getPermission(DefaultPermissions::ROOT_OPERATOR)]);
 
         TemplateManager::getInstance()->loadTemplates();
 

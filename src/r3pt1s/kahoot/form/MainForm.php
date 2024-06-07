@@ -100,7 +100,7 @@ class MainForm extends MenuForm {
                         array_map(fn(Template $template) => new MenuOption("§e" . $template->getName() . "\n§b" . $template->getCreator()), $templates = array_values(TemplateManager::getInstance()->getPlayableGameTemplates())),
                         function (Player $player, int $data) use($templates): void {
                             if (isset($templates[$data])) {
-                                $canCreatePublicLobby = Kahoot::getInstance()->get("public-lobbies.needPermToCreate", true) && $player->hasPermission("pmmpkahoot.public_lobby.create");
+                                $canCreatePublicLobby = Kahoot::getInstance()->get("public-lobbies.needPermToCreate", true) && $player->hasPermission("pmmpkahoot.publiclobby.create");
                                 $template = $templates[$data];
                                 $player->sendForm(new CustomForm(
                                     "§8» §l§aCreate Lobby",
