@@ -5,7 +5,6 @@ namespace r3pt1s\kahoot\game\template;
 use pocketmine\player\Player;
 use pocketmine\utils\Config;
 use pocketmine\utils\SingletonTrait;
-use r3pt1s\kahoot\game\question\GameQuestion;
 use r3pt1s\kahoot\Kahoot;
 
 class TemplateManager {

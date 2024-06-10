@@ -4,7 +4,6 @@ namespace r3pt1s\kahoot\command;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\plugin\PluginOwned;
@@ -16,7 +15,7 @@ class KahootCommand extends Command implements PluginOwned {
 
     public function __construct() {
         parent::__construct("kahoot", "Kahoot Command", "/kahoot");
-        $this->setPermission(DefaultPermissions::ROOT_USER);
+        $this->setPermission("pmmpkahoot.command.main");
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool {

@@ -12,3 +12,9 @@ permissions:
   pmmpkahoot.template.create:
     default: op
     description: Permission to create templates
+  pmmpkahoot.command.main:
+    default: true
+    description: Main Command for PMMPKahoot
+  pmmpkahoot.command.leave:
+    default: true
+    description: Leave a game

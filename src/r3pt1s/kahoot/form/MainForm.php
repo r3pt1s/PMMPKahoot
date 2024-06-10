@@ -10,7 +10,6 @@ use dktapps\pmforms\element\Slider;
 use dktapps\pmforms\element\Toggle;
 use dktapps\pmforms\MenuForm;
 use dktapps\pmforms\MenuOption;
-use pocketmine\permission\DefaultPermissions;
 use pocketmine\player\Player;
 use r3pt1s\kahoot\form\sub\JoinLobbyForm;
 use r3pt1s\kahoot\form\sub\MyCreationsForm;
