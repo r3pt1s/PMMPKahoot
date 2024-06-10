@@ -8,10 +8,10 @@ A Kahoot-based game for your PocketMineMP server.
 - **Play with others**, even as the host of the game
 
 ## Commands
-| Usage        | Description             | Permission    |
-|--------------|-------------------------|---------------|
-| /kahoot      | The main Kahoot command | No Permission |
-| /kahootleave | Leave your current game | No Permission |
+| Usage        | Description             | Permission                               |
+|--------------|-------------------------|------------------------------------------|
+| /kahoot      | The main Kahoot command | pmmpkahoot.command.main (default: true)  |
+| /kahootleave | Leave your current game | pmmpkahoot.command.leave (default: true) |
 
 
 ## Permissions
