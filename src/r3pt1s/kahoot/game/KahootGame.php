@@ -85,6 +85,12 @@ class KahootGame {
         }
     }
 
+    public function closeAllForms(): void {
+        foreach ($this->participants as $participant) {
+            $participant->getOrigin()?->closeAllForms();
+        }
+    }
+
     public function startGame(): void {
         if ($this->running) return;
         $this->running = true;
@@ -110,6 +116,7 @@ class KahootGame {
             $this->sendForm(fn(GameParticipant $participant) => $this->currentGameQuestion->buildForm($this, $participant->isHost()));
             $this->delayTask(function (): void {
                 $this->isQuestioning = false;
+                $this->closeAllForms();
                 $this->sendMessage("§cTime has ended!");
                 if (!$this->currentGameQuestion instanceof SliderQuestion) {
                     $this->sendMessage("§7Results§8: ", 10, function (): void {
