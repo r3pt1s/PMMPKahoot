@@ -40,7 +40,7 @@ class KahootCommand extends Command implements PluginOwned {
                         }
 
                         if (strtolower($args[0]) == "start") {
-                            if (count($game->getParticipants()) >= 2) {
+                            if (count($game->getParticipants()) >= 1) {
                                 $game->startGame();
                             } else $sender->sendMessage(Kahoot::PREFIX . "§cYou can't start the game yet!");
                             return true;

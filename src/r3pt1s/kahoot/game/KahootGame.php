@@ -66,12 +66,14 @@ class KahootGame {
     public function sendMessage(string $message, int $delayTicks = 0, ?\Closure $onCompletion = null): void {
         if ($delayTicks > 0) {
             Kahoot::getInstance()->getScheduler()->scheduleDelayedTask(new ClosureTask(function () use($message, $onCompletion): void {
+                $this->getHost()?->sendMessage(Kahoot::PREFIX . $message);
                 foreach ($this->participants as $participant) {
                     $participant->getOrigin()?->sendMessage(Kahoot::PREFIX . $message);
                 }
                 if ($onCompletion !== null) ($onCompletion)();
             }), $delayTicks);
         } else {
+            $this->getHost()?->sendMessage(Kahoot::PREFIX . $message);
             foreach ($this->participants as $participant) {
                 $participant->getOrigin()?->sendMessage(Kahoot::PREFIX . $message);
             }
@@ -86,6 +88,7 @@ class KahootGame {
     }
 
     public function closeAllForms(): void {
+        $this->getHost()?->closeAllForms();
         foreach ($this->participants as $participant) {
             $participant->getOrigin()?->closeAllForms();
         }
@@ -125,20 +128,20 @@ class KahootGame {
                                 $this->sendMessage("§e" . $answer . "§8: §7" . $this->getAnswerPercentage($answer) . "%");
                             }
 
-                            $this->sendMessage("§7Correct answer" . (count($this->currentGameQuestion->getCorrectAnswers()) > 1 ? "s" : "") . "§8: §a" . implode("§8, §a", $this->currentGameQuestion->getCorrectAnswers()));
+                            $this->sendMessage("§7Correct answer" . ($this->isForceEveryAnswerCorrect() ? "s" : (count($this->currentGameQuestion->getCorrectAnswers()) > 1 ? "s" : "")) . "§8: §a" . implode("§8, §a", $this->isForceEveryAnswerCorrect() ? $this->currentGameQuestion->getAnswers() : $this->currentGameQuestion->getCorrectAnswers()));
                         } else if ($this->currentGameQuestion instanceof TrueOrFalseQuestion) {
                             foreach ([true, false] as $answer) {
                                 $this->sendMessage("§e" . ($answer ? "True" : "False") . "§8: §7" . $this->getAnswerPercentage($answer) . "%");
                             }
 
-                            $this->sendMessage("§7Correct answer§8: §a" . ($this->currentGameQuestion->getCorrectAnswer() ? "True" : "False"));
+                            $this->sendMessage("§7Correct answer§8: §a" . ($this->isForceEveryAnswerCorrect() ? "True and False" : ($this->currentGameQuestion->getCorrectAnswer() ? "True" : "False")));
                         }
 
                         $this->sendInfoPopUps();
                         $this->delayTask(fn() => $this->tick(), 60);
                     });
                 } else {
-                    $this->sendMessage("§7Correct answer§8: §a" . $this->currentGameQuestion->getAnswer(), 10, function (): void {
+                    $this->sendMessage("§7Correct answer§8: §a" . ($this->isForceEveryAnswerCorrect() ? "Everything" : $this->currentGameQuestion->getAnswer()), 10, function (): void {
                         $this->sendInfoPopUps();
                         $this->delayTask(fn() => $this->tick(), 20);
                     });
@@ -153,14 +156,14 @@ class KahootGame {
         $this->sendMessage("§cThe Kahoot game has ended!");
         if ($wasRunning) {
             $rankings = $this->sortPlayerRankings();
-            $number1Points = isset($rankings[0]) ? ($this->participants[$rankings[0]]?->getPoints() ?? 0) : 0;
-            $number2Points = isset($rankings[1]) ? ($this->participants[$rankings[1]]?->getPoints() ?? 0) : 0;
-            $number3Points = isset($rankings[2]) ? ($this->participants[$rankings[2]]?->getPoints() ?? 0) : 0;
+            $number1Points = isset($rankings[0]) ? ($this->getParticipant($rankings[0])?->getPoints() ?? 0) : 0;
+            $number2Points = isset($rankings[1]) ? ($this->getParticipant($rankings[1])?->getPoints() ?? 0) : 0;
+            $number3Points = isset($rankings[2]) ? ($this->getParticipant($rankings[2])?->getPoints() ?? 0) : 0;
             $this->sendMessage("§e#1§8: §7" . ($rankings[0] ?? "NaN") . " with §e" . $number1Points . " Points!", 10);
             $this->sendMessage("§f#2§8: §7" . ($rankings[1] ?? "NaN") . " with §e" . $number2Points . " Points!", 20);
             $this->sendMessage("§c#3§8: §7" . ($rankings[2] ?? "NaN") . " with §e" . $number3Points . " Points!", 30, function () use($rankings): void {
                 foreach ($this->participants as $participant) {
-                    $rank = array_search($participant->getOriginName(), $rankings) + 1;
+                    $rank = array_search($participant->getCustomName(), $rankings) + 1;
                     $totalPoints = $participant->getPoints();
                     $popup = "§7Rank: §8#§" . match ($rank) {
                             1 => "e",
@@ -188,7 +191,7 @@ class KahootGame {
         $givenPoints = $this->givePoints();
         $sortedPlayerRankings = $this->sortPlayerRankings();
         foreach ($this->participants as $participant) {
-            $index = array_search($participant->getOriginName(), $sortedPlayerRankings);
+            $index = array_search($participant->getCustomName(), $sortedPlayerRankings);
             $rank = $index + 1;
             $popup = "§8+§a" . ($givenPoints[$participant->getOriginName()] ?? 0) . " Points";
             $popup .= "\n§7Rank: §8#§" . match ($rank) {
@@ -199,12 +202,15 @@ class KahootGame {
             } . $rank;
 
             if ($rank > 1 && isset($sortedPlayerRankings[$index - 1])) {
-                $diff = $this->participants[$sortedPlayerRankings[$index - 1]]->getPoints() - $participant->getPoints();
+                $diff = $this->getParticipant($sortedPlayerRankings[$index - 1])->getPoints() - $participant->getPoints();
                 $popup .= "\n§e" . $diff . " Points §cbehind §e" . $sortedPlayerRankings[$index - 1] . "§8.";
             }
 
             $participant->getOrigin()?->sendPopup($popup);
         }
+
+        $this->setForceEveryAnswerCorrect(false);
+        $this->setForceDoublePoints(false);
     }
 
     private function givePoints(): array {
@@ -219,7 +225,7 @@ class KahootGame {
     private function sortPlayerRankings(): array {
         $sortedPlayers = [];
         foreach ($this->participants as $participant) {
-            $sortedPlayers[$participant->getOriginName()] = $participant->getPoints();
+            $sortedPlayers[$participant->getCustomName()] = $participant->getPoints();
         }
 
         arsort($sortedPlayers);
@@ -230,6 +236,7 @@ class KahootGame {
         if (!$this->running) return -1;
         $count = count(array_filter($this->currentQuestionAnswers, fn(QuestionAnswer $playerAnswer) => $playerAnswer->getAnswer() == $answer));
         $totalAnswers = count($this->currentQuestionAnswers);
+        if ($totalAnswers == 0) return 0.0;
         return $count / $totalAnswers * 100;
     }
 
@@ -290,12 +297,24 @@ class KahootGame {
 
     public function getParticipant(Player|string $name): ?GameParticipant {
         $name = $name instanceof Player ? $name->getName() : $name;
-        return $this->participants[$name] ?? null;
+        if (isset($this->participants[$name])) return $this->participants[$name];
+
+        foreach ($this->participants as $participant) {
+            if ($participant->getCustomName() == $name) return $participant;
+        }
+
+        return null;
     }
 
     public function isParticipant(Player|string $name): bool {
         $name = $name instanceof Player ? $name->getName() : $name;
-        return isset($this->participants[$name]);
+        if (isset($this->participants[$name])) return true;
+
+        foreach ($this->participants as $participant) {
+            if ($participant->getCustomName() == $name) return true;
+        }
+
+        return false;
     }
 
     public function getParticipants(): array {

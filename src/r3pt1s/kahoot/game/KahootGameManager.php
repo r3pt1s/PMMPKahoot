@@ -41,11 +41,12 @@ class KahootGameManager {
     }
 
     public function isPlaying(Player|string $player): bool {
-        return count(array_filter($this->games, fn(KahootGame $game) => $game->isParticipant($player))) > 0;
+        return $this->getGameOfPlayer($player) !== null;
     }
 
     public function getGameOfPlayer(Player|string $player): ?KahootGame {
-        return array_values(array_filter($this->games, fn(KahootGame $game) => $game->isParticipant($player)))[0] ?? null;
+        $player = $player instanceof Player ? $player->getName() : $player;
+        return array_values(array_filter($this->games, fn(KahootGame $game) => $game->isParticipant($player) || $game->getHostName() == $player))[0] ?? null;
     }
 
     public function getGameById(int $id): ?KahootGame {
